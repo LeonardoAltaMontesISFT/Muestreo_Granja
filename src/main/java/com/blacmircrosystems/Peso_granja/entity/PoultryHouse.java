@@ -22,4 +22,7 @@ public class PoultryHouse {
 
     private  String numberPoultry;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "farm_id",nullable = false)
+    private Farm farm;
 }
