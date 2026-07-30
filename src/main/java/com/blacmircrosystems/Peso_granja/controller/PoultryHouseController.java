@@ -48,5 +48,10 @@ public class PoultryHouseController {
         return ResponseEntity.noContent().build();
 
     }
+    @GetMapping("/granja/{idFarm}")
+    public ResponseEntity<List<PoultryHouseResponse>> getIdFarm(@PathVariable Long idFarm){
+        return ResponseEntity.ok(poultryHouseService.getByFarm(idFarm));
+    }
+
 
 }

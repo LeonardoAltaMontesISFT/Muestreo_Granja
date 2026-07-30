@@ -14,7 +14,11 @@ public class PoultryHouseMapper {
         return poultryHouse;
     }
     public PoultryHouseResponse toResponse(PoultryHouse poultryHouse){
-        return new PoultryHouseResponse(poultryHouse.getId(), poultryHouse.getNumberPoultry());
+        return new PoultryHouseResponse(poultryHouse.getId(),
+                poultryHouse.getNumberPoultry(),
+                poultryHouse.getFarm().getId(),
+                poultryHouse.getFarm().getName()
+        );
 
     }
 }

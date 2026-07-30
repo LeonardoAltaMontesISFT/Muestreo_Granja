@@ -12,5 +12,6 @@ public interface PoultryHouseRepository extends JpaRepository<PoultryHouse,Long>
 
     boolean existsByNumberPoultry(String numberPoultry);
      List<PoultryHouse> findByFarmId(Long farmId);
+     boolean existsByFarmIdAndNumberPoultry(Long idFarm, String numberPoultry);
 
 }

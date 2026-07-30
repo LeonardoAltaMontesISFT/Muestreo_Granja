@@ -37,6 +37,7 @@ private final SamplingMapper samplingMapper;
     }
     //Crear muestreo
     public SamplingResponse create(SamplingRequest sampling){
+
         PoultryHouse poultryHouse= findPoultryHouseById(sampling.getPoultryHouseId());
         Sampling sampling1= samplingMapper.toEntity(sampling);
         sampling1.setPoultryHouse(poultryHouse);

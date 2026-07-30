@@ -14,12 +14,18 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "poultry_house")
+@Table(name = "poultry_house",
+        uniqueConstraints = {
+        @UniqueConstraint(
+                name = "uk_poultry_house_farm_number",
+                columnNames = {"farm_id", "number_poultry"}        )
+        })
 public class PoultryHouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Long id;
 
+    @Column(name = "number_poultry",nullable = false)
     private  String numberPoultry;
 
     @ManyToOne(fetch = FetchType.LAZY)

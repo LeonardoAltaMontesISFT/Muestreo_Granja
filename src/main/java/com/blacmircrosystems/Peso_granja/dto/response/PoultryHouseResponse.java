@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class PoultryHouseResponse {
     private Long id;
     private String numberPoultry;
+    private Long farmId;
+    private String nameFarm;
 }
