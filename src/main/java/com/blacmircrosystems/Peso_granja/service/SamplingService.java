@@ -1,6 +1,7 @@
 package com.blacmircrosystems.Peso_granja.service;
 
 import com.blacmircrosystems.Peso_granja.dto.request.SamplingRequest;
+import com.blacmircrosystems.Peso_granja.dto.response.SamplingListResponse;
 import com.blacmircrosystems.Peso_granja.dto.response.SamplingResponse;
 import com.blacmircrosystems.Peso_granja.entity.PoultryHouse;
 import com.blacmircrosystems.Peso_granja.entity.Sampling;
@@ -27,8 +28,8 @@ private final SamplingMapper samplingMapper;
     }
     //Listar por caseta
     @Transactional
-    public List<SamplingResponse> getByPoultryHouseId(Long id){
-        return samplingRepository.findByPoultryHouseId(id).stream().map(samplingMapper::toResponse).toList();
+    public List<SamplingListResponse> getByPoultryHouseId(Long id){
+        return samplingRepository.findByPoultryHouseId(id).stream().map(samplingMapper::toResponseList).toList();
     }
     //Buscar por id
     public SamplingResponse getById(Long id){

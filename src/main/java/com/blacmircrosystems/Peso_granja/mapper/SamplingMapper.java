@@ -1,6 +1,7 @@
 package com.blacmircrosystems.Peso_granja.mapper;
 
 import com.blacmircrosystems.Peso_granja.dto.request.SamplingRequest;
+import com.blacmircrosystems.Peso_granja.dto.response.SamplingListResponse;
 import com.blacmircrosystems.Peso_granja.dto.response.SamplingResponse;
 import com.blacmircrosystems.Peso_granja.entity.Sampling;
 import com.blacmircrosystems.Peso_granja.enums.SamplingStatus;
@@ -40,4 +41,8 @@ public class SamplingMapper {
                 sampling.getCreatedDate()
         );
     }
+    public SamplingListResponse toResponseList(Sampling sampling){
+        return new SamplingListResponse(sampling.getId(),sampling.getAgeBirds(),sampling.getSex());
+    }
+
 }

@@ -29,5 +29,10 @@ public class WeigthRecordController {
         List<WeigthRecordResponse> recordResponses = weigthRecordService.getAll(idSampling);
         return ResponseEntity.ok(recordResponses);
     }
+    @PostMapping("lista/{idSampling}")
+    public  ResponseEntity<SamplingResponse> addWeigts(@PathVariable Long idSampling,@RequestBody List<WeigthRecordRequest> requestList){
+        SamplingResponse samplingResponse =  weigthRecordService.addWeigths(idSampling,requestList);
+        return  ResponseEntity.status(HttpStatus.CREATED).body(samplingResponse);
+    }
 
 }

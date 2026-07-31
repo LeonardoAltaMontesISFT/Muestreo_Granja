@@ -14,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -67,6 +68,29 @@ public class WeigthRecordService {
 
     }
 
+    @Transactional
+    public SamplingResponse addWeigths(Long idSampling, List<WeigthRecordRequest> requestList){
+        Sampling sampling = samplingRepository.findById(idSampling).orElseThrow(()-> new RuntimeException("Muestreo no encontrado con este id: " + idSampling));
+        if(sampling.getSamplingStatus()== SamplingStatus.COMPLETED){
+            throw new RuntimeException("No se puede agregar un muestreo ya terminado");
+        }
+
+        for(int i = 0;i< requestList.size();i++){
+            int nextBirdNumber = sampling.getAmountBirds()+1;
+            WeigthRecord weigthRecord1= new WeigthRecord();
+            weigthRecord1.setSampling(sampling);
+            weigthRecord1.setBirdNumber(nextBirdNumber);
+            weigthRecord1.setWeigth(requestList.get(i).getWeigth());
+
+            weigthRecordRepository.save(weigthRecord1);
+            recalculatedSampling(sampling);
+
+        }
+        Sampling save = samplingRepository.save(sampling);
+
+        return  samplingMapper.toResponse(save);
+
+    }
     public List<WeigthRecordResponse> getAll(Long id){
         return weigthRecordRepository.findBySamplingId(id).stream().map(weigthRecordMapper::toResponse).toList();
     }

@@ -1,6 +1,7 @@
 package com.blacmircrosystems.Peso_granja.controller;
 
 import com.blacmircrosystems.Peso_granja.dto.request.SamplingRequest;
+import com.blacmircrosystems.Peso_granja.dto.response.SamplingListResponse;
 import com.blacmircrosystems.Peso_granja.dto.response.SamplingResponse;
 import com.blacmircrosystems.Peso_granja.entity.Sampling;
 import com.blacmircrosystems.Peso_granja.service.SamplingService;
@@ -29,7 +30,7 @@ public class SamplingController {
         return ResponseEntity.ok(sampling);
     }
     @GetMapping("/casetas/{casetaId}")
-    public ResponseEntity<List<SamplingResponse>> getAllPoultryHouse(@PathVariable Long casetaId){
+    public ResponseEntity<List<SamplingListResponse>> getAllPoultryHouse(@PathVariable Long casetaId){
         return ResponseEntity.ok(samplingService.getByPoultryHouseId(casetaId));
     }
 
