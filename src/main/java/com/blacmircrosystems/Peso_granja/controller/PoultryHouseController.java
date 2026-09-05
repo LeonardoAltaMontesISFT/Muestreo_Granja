@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api1/casetas")
+@RequestMapping("/api/casetas")
 public class PoultryHouseController {
     private final PoultryHouseService poultryHouseService;
 

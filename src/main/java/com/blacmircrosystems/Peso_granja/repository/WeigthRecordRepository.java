@@ -9,6 +9,7 @@ import java.util.List;
 public interface WeigthRecordRepository extends JpaRepository<WeigthRecord, Long> {
     //Metodo para obtener los pesos ordeneados
     List<WeigthRecord> findBySamplingIdOrderByBirdNumberAsc(Long samplingId);
-    long countBySamplingId(Long samplingId);
+    int countBySamplingId(Long samplingId);
     List<WeigthRecord> findBySamplingId(Long id);
+
 }

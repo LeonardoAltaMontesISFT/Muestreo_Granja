@@ -69,29 +69,75 @@ public class WeigthRecordService {
     }
 
     @Transactional
-    public SamplingResponse addWeigths(Long idSampling, List<WeigthRecordRequest> requestList){
-        Sampling sampling = samplingRepository.findById(idSampling).orElseThrow(()-> new RuntimeException("Muestreo no encontrado con este id: " + idSampling));
-        if(sampling.getSamplingStatus()== SamplingStatus.COMPLETED){
-            throw new RuntimeException("No se puede agregar un muestreo ya terminado");
+    public SamplingResponse addWeights(
+            Long samplingId,
+            List<WeigthRecordRequest> requests
+    ) {
+        if (requests == null || requests.isEmpty()) {
+            throw new IllegalArgumentException(
+                    "La lista de pesos no puede estar vacía"
+            );
         }
 
-        for(int i = 0;i< requestList.size();i++){
-            int nextBirdNumber = sampling.getAmountBirds()+1;
-            WeigthRecord weigthRecord1= new WeigthRecord();
-            weigthRecord1.setSampling(sampling);
-            weigthRecord1.setBirdNumber(nextBirdNumber);
-            weigthRecord1.setWeigth(requestList.get(i).getWeigth());
+        Sampling sampling = samplingRepository.findById(samplingId)
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Muestreo no encontrado con id: " + samplingId
+                ));
 
-            weigthRecordRepository.save(weigthRecord1);
-            recalculatedSampling(sampling);
-
+        if (sampling.getSamplingStatus() == SamplingStatus.COMPLETED) {
+            throw new IllegalArgumentException(
+                    "No se pueden agregar pesos a un muestreo terminado"
+            );
         }
-        Sampling save = samplingRepository.save(sampling);
 
-        return  samplingMapper.toResponse(save);
+        int currentBirdCount = weigthRecordRepository
+                .countBySamplingId(samplingId);
 
+        List<WeigthRecord> weightRecords = new ArrayList<>();
+
+        for (int i = 0; i < requests.size(); i++) {
+            WeigthRecordRequest request = requests.get(i);
+
+            validateWeight(request);
+
+            WeigthRecord weightRecord = new WeigthRecord();
+
+            weightRecord.setSampling(sampling);
+            weightRecord.setBirdNumber(currentBirdCount + i + 1);
+            weightRecord.setWeigth(request.getWeigth());
+
+            weightRecords.add(weightRecord);
+        }
+
+        weigthRecordRepository.saveAll(weightRecords);
+
+        recalculatedSampling(sampling);
+
+
+        Sampling savedSampling = samplingRepository.save(sampling);
+
+        return samplingMapper.toResponse(savedSampling);
     }
     public List<WeigthRecordResponse> getAll(Long id){
         return weigthRecordRepository.findBySamplingId(id).stream().map(weigthRecordMapper::toResponse).toList();
+    }
+    private void validateWeight(WeigthRecordRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException(
+                    "El registro de peso no puede ser nulo"
+            );
+        }
+
+        if (Double.toString(request.getWeigth())==null) {
+            throw new IllegalArgumentException(
+                    "El peso es obligatorio"
+            );
+        }
+
+        if (request.getWeigth() <= 0) {
+            throw new IllegalArgumentException(
+                    "El peso debe ser mayor que cero"
+            );
+        }
     }
 }

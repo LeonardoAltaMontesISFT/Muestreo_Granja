@@ -12,8 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SamplingRequest {
-    private Long poultryHouseId;
-    private int ageBirds;
+    private Long flockHouseId;
+        private int ageBirds;
     private Sex sex;
     private Zone zone;
 }

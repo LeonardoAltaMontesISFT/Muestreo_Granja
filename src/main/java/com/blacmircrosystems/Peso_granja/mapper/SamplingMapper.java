@@ -27,8 +27,8 @@ public class SamplingMapper {
     public SamplingResponse toResponse(Sampling sampling) {
         return new SamplingResponse(
                 sampling.getId(),
-                sampling.getPoultryHouse().getId(),
-                sampling.getPoultryHouse().getNumberPoultry(),
+                sampling.getFlockHouse().getPoultryHouse().getId(),
+                sampling.getFlockHouse().getPoultryHouse().getNumberPoultry(),
                 sampling.getAgeBirds(),
                 sampling.getSex(),
                 sampling.getZone(),

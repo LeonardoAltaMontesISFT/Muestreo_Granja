@@ -25,8 +25,8 @@ public class    Sampling {
     private Long id;
     //Caseta
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="poultry_house_id")
-    private PoultryHouse poultryHouse;
+    @JoinColumn(name="flock_house_id")
+    private FlockHouse flockHouse;
     //Cantidad de aves
     @Column(nullable = false)
     private int amountBirds;
@@ -60,6 +60,8 @@ public class    Sampling {
     //Peso Maximo
     @Column(nullable = false)
     private double maximumWeight;
+    //Ganancia
+
 
 
 

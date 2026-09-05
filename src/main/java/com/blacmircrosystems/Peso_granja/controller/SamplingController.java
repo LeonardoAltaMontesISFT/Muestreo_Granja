@@ -31,7 +31,7 @@ public class SamplingController {
     }
     @GetMapping("/casetas/{casetaId}")
     public ResponseEntity<List<SamplingListResponse>> getAllPoultryHouse(@PathVariable Long casetaId){
-        return ResponseEntity.ok(samplingService.getByPoultryHouseId(casetaId));
+        return ResponseEntity.ok(samplingService.getByFlockHouseId(casetaId));
     }
 
     @PostMapping
