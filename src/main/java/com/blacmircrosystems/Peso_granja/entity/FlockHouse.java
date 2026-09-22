@@ -5,9 +5,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.print.attribute.IntegerSyntax;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -32,12 +34,12 @@ public class FlockHouse {
     private Integer currentMaleCount;
     @Column(nullable = false)
     private Integer currentFemaleCount;
-    @Column(nullable = false)
-    private Integer acummulatedMaleDeaths;
-    @Column(nullable = false)
-    private Integer acummulatedFemaleDeaths;
+
 
     private LocalDate removalDate;
+    @CreationTimestamp
+    @Column(nullable = false,updatable = false)
+    private LocalDateTime recordAt;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false,length = 20)
     private FlockHouseStatus status;

@@ -26,6 +26,4 @@ public class FlockHouseResponse {
     private String numberPoultryHose;
     private  Integer currentMaleCount;
     private Integer currentFemaleCount;
-    private Integer acummulatedFemaleDeaths;
-    private Integer accumulatedMaleDeaths;
 }

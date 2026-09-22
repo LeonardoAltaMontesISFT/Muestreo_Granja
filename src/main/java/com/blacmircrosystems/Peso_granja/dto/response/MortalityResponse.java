@@ -17,7 +17,7 @@ public class MortalityResponse {
     private Integer maleDeaths;
     private Integer femaleDeaths;
     private LocalDateTime recordAt;
-    private FlockHouse flockHouse;
+    private String numberPoutlry;
 
 
 }

@@ -1,6 +1,7 @@
 package com.blacmircrosystems.Peso_granja.mapper;
 
 import com.blacmircrosystems.Peso_granja.dto.request.FlockHouseRequest;
+import com.blacmircrosystems.Peso_granja.dto.response.FlockHouseMortalityResponse;
 import com.blacmircrosystems.Peso_granja.dto.response.FlockHouseResponse;
 import com.blacmircrosystems.Peso_granja.entity.FlockHouse;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,7 @@ public class FlockHouseMapper {
         flockHouse.setInitialMaleBirdCount(request.getInitialMaleBirdCount());
         flockHouse.setStatus(request.getStatus());
         flockHouse.setLiveBirdCount(request.getInitialFemaleBirdCount()+ request.getInitialMaleBirdCount());
-        flockHouse.setAcummulatedFemaleDeaths(0);
-        flockHouse.setAcummulatedMaleDeaths(0);
+
         flockHouse.setCurrentFemaleCount(request.getInitialFemaleBirdCount());
         flockHouse.setCurrentMaleCount(request.getInitialMaleBirdCount());
         return flockHouse;
@@ -31,8 +31,8 @@ public class FlockHouseMapper {
         response.setNumberPoultryHose(flockHouse.getPoultryHouse().getNumberPoultry());
         response.setCurrentFemaleCount(flockHouse.getCurrentFemaleCount());
         response.setCurrentMaleCount(flockHouse.getCurrentMaleCount());
-        response.setAccumulatedMaleDeaths(flockHouse.getAcummulatedMaleDeaths());
-        response.setAcummulatedFemaleDeaths(flockHouse.getAcummulatedFemaleDeaths());
+
         return response;
     }
+
 }

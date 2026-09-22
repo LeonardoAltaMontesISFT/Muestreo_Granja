@@ -14,6 +14,6 @@ import lombok.Setter;
 public class MortalityRequest {
         private Integer maleDeaths;
         private Integer femaleDeaths;
-        private FlockHouse flockHouse;
+        private Long idFlockHouse;
 
 }

@@ -27,6 +27,7 @@ public class    Mortality {
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     private LocalDateTime recordAt;
+    private Integer age;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "flock_house_id", nullable = false)

@@ -35,6 +35,7 @@ public class FlockService {
          Flock flock = flockRepository.findById(id).orElseThrow(()-> new RuntimeException("Parvada no encontrada"));
          return flockMapper.toResponse(flock);
         }
+//Creacion de metodo para listar parvadas por granjas pendiente
 
     private Farm farmById(Long id){
         return farmRepository.findById(id).orElseThrow(()-> new RuntimeException("Granja no encontrada"));
