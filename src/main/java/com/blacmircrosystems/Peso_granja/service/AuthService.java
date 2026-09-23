@@ -1,6 +1,7 @@
 package com.blacmircrosystems.Peso_granja.service;
 
 import com.blacmircrosystems.Peso_granja.dto.request.LoginRequest;
+import com.blacmircrosystems.Peso_granja.dto.response.LoginResponse;
 import com.blacmircrosystems.Peso_granja.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,8 +23,19 @@ public class AuthService {
 
         return authenticationManager.authenticate(credentials);
     }
-    public String login(LoginRequest request){
+    public LoginResponse login(LoginRequest request) {
         Authentication authentication = authenticate(request);
-        return jwtService.generateToken(authentication);
+        String accessToken = jwtService.generateToken(authentication);
+
+        String role = authentication.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .filter(authority -> authority.startsWith("ROLE_"))
+                .map(authority -> authority.substring("ROLE_".length()))
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalStateException("La cuenta no tiene un rol asignado")
+                );
+
+        return new LoginResponse(accessToken, "Bearer", role);
     }
 }

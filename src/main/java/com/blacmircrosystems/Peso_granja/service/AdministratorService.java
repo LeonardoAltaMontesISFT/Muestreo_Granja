@@ -1,5 +1,6 @@
 package com.blacmircrosystems.Peso_granja.service;
 
+import com.blacmircrosystems.Peso_granja.dto.request.AdministratorContactRequest;
 import com.blacmircrosystems.Peso_granja.dto.request.AdministratorRequest;
 import com.blacmircrosystems.Peso_granja.dto.response.AdministratorResponse;
 import com.blacmircrosystems.Peso_granja.entity.Administrator;
@@ -53,5 +54,32 @@ private final PasswordEncoder passwordEncoder;
         administrator.setUserAccount(userAccount);
         Administrator administrator1 = administratorRepository.save(administrator);
         return mapper.toResponse(administrator1);
+    }
+    @Transactional
+    public AdministratorResponse update(Long id, AdministratorContactRequest request){
+        Administrator administrator = finById(id);
+        administrator.setPhone(request.getPhone());
+        administrator.setEmail(request.getEmail());
+        administrator.setName(request.getName());
+        administrator.setLastName(request.getLastName());
+        administrator.setAge(request.getAge());
+        Administrator save = administratorRepository.save(administrator);
+        return  mapper.toResponse(save);
+
+    }
+    @Transactional
+    public void delete(Long id){
+        Administrator administrator = finById(id);
+        UserAccount user= findByIdUser(administrator.getUserAccount().getId());
+        administratorRepository.delete(administrator);
+        userAccountRepository.delete(user);
+    }
+    private Administrator finById(Long id){
+        Administrator administrator = administratorRepository.findById(id).orElseThrow(()-> new RuntimeException("Trabajador no encontrado"));
+        return administrator;
+    }
+    private UserAccount findByIdUser(Long id){
+        UserAccount user = userAccountRepository.findById(id).orElseThrow(()-> new RuntimeException("Cuenta no encontrada"));
+        return user;
     }
 }
