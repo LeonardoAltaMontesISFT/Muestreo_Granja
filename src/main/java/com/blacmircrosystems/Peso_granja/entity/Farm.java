@@ -17,6 +17,9 @@ public class Farm {
     @Column(nullable = false)
     private String name;
     private String ubicacion;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "farm_manager_id")
+    private FarmManager manager;
 
 
 }

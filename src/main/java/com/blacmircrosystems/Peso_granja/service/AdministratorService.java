@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.blacmircrosystems.Peso_granja.enums.RoleEnum.ADMIN;
@@ -32,7 +33,7 @@ private final PasswordEncoder passwordEncoder;
     @Transactional
     public AdministratorResponse create (AdministratorRequest request){
         if(userAccountRepository.existsByUsername(request.getUserName())){
-            throw new IllegalArgumentException("Numero de trabajor ya esta registrado");
+            throw new IllegalArgumentException("Numero de trabajador ya esta registrado");
         }
         Role adminRole;
         Optional<Role> exists = roleRepository.findByName(ADMIN);
@@ -73,6 +74,9 @@ private final PasswordEncoder passwordEncoder;
         UserAccount user= findByIdUser(administrator.getUserAccount().getId());
         administratorRepository.delete(administrator);
         userAccountRepository.delete(user);
+    }
+    public List<AdministratorResponse> getAll(){
+        return administratorRepository.findAll().stream().map(mapper::toResponse).toList();
     }
     private Administrator finById(Long id){
         Administrator administrator = administratorRepository.findById(id).orElseThrow(()-> new RuntimeException("Trabajador no encontrado"));

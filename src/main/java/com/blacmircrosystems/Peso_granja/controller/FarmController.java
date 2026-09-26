@@ -22,6 +22,19 @@ public class FarmController {
         FarmResponse farmResponse= farmService.create(request);
         return  ResponseEntity.status(HttpStatus.CREATED).body(farmResponse);
     }
+    @PutMapping("/{farmId}/encargado/{managerId}")
+    public ResponseEntity<FarmResponse> addManager(
+            @PathVariable Long farmId,
+            @PathVariable Long managerId
+    ) {
+        return ResponseEntity.ok(farmService.addFarmManager(farmId, managerId));
+    }
+    @PutMapping("/quit/{farmId}")
+    public ResponseEntity<FarmResponse> quitFarmManager(
+            @PathVariable Long farmId
+    ){
+        return ResponseEntity.ok(farmService.quitFarmManager(farmId));
+    }
     @GetMapping
     public ResponseEntity<List<FarmResponse>> getAll(){
         List<FarmResponse> farmResponses = farmService.getAll();

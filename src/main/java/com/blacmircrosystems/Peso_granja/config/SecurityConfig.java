@@ -76,23 +76,35 @@ public class SecurityConfig {
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/granja",
-                                "/api/casetas"
+                                "/api/casetas",
+                                "/api/encargado",
+                                "/api/veterinario"
                         ).hasRole("ADMIN")
+
 
                         // Modificar granjas y casetas
                         .requestMatchers(
                                 HttpMethod.PUT,
                                 "/api/granja/**",
                                 "/api/casetas/**"
+
                         ).hasRole("ADMIN")
 
                         // Eliminar granjas y casetas
                         .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/api/granja/**",
-                                "/api/casetas/**"
-                        ).hasRole("ADMIN")
+                                "/api/casetas/**",
+                                "/api/encargado/**",
+                                "/api/veterinario/**"
 
+                        ).hasRole("ADMIN")
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/encargado/**",
+                                "/api/veterinario/**"
+
+                        ).hasRole("ADMIN")
                         // Resto de las rutas
                         .anyRequest().authenticated()
                 )

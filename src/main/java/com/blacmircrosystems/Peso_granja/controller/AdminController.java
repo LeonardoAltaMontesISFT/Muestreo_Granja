@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/admin")
@@ -36,6 +38,11 @@ public class AdminController {
     public ResponseEntity<AdministratorResponse> update(@PathVariable Long id, @RequestBody AdministratorContactRequest request){
         AdministratorResponse response = service.update(id,request);
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/todos")
+    public ResponseEntity<List<AdministratorResponse>> getAlll(){
+        List<AdministratorResponse> list = service.getAll();
+        return ResponseEntity.ok(list);
     }
 
 

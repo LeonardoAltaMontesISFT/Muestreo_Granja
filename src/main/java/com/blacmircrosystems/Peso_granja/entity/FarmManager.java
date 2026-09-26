@@ -21,12 +21,10 @@ public class FarmManager {
     private Long id;
     @Column(nullable = false)
     private String name;
-    @Column(nullable = false,unique = true)
-    private String workerNumber;
     @Column(nullable = false)
     private String lastName;
     @Column(nullable = false)
-    private int age;
+    private Integer age;
     @Column(nullable = false,length = 10)
     private String phone;
     @Column(nullable = false)
@@ -34,7 +32,10 @@ public class FarmManager {
     @CreationTimestamp
     @Column(nullable = false,updatable = false)
     private LocalDateTime registrationDate;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,optional = false)
     @JoinColumn(name = "user_account_id",nullable = false,unique = true)
     private UserAccount userAccount;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "veterinarian_id")
+    private Veterinarian veterinarian;
 }

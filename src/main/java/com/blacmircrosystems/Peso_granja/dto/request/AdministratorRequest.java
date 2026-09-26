@@ -14,17 +14,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdministratorRequest {
-    @NotBlank(message = "El nombre es obligatorio")
-    private String name;
-    @NotBlank(message = "El apellido es obligatorio")
-    private String lastName;
-    @NotNull(message = "La edad es obligatoria")@Positive
-    private Integer age;
-
-    private String phone;
-    @NotBlank@Email
-    private String email;
-
-    private String userName;
-    private String password;
+        @NotBlank(message = "El nombre es obligatorio")
+        private String name;
+        @NotBlank(message = "El apellido es obligatorio")
+        private String lastName;
+        @NotNull(message = "La edad es obligatoria")@Positive
+        private Integer age;
+        @NotBlank
+        private String phone;
+        @NotBlank@Email
+        private String email;
+        @NotBlank
+        private String userName;
+        @NotBlank
+        private String password;
 }

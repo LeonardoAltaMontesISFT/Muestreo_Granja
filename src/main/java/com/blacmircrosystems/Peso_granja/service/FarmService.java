@@ -3,7 +3,9 @@ package com.blacmircrosystems.Peso_granja.service;
 import com.blacmircrosystems.Peso_granja.dto.request.FarmRequest;
 import com.blacmircrosystems.Peso_granja.dto.response.FarmResponse;
 import com.blacmircrosystems.Peso_granja.entity.Farm;
+import com.blacmircrosystems.Peso_granja.entity.FarmManager;
 import com.blacmircrosystems.Peso_granja.mapper.FarmMapper;
+import com.blacmircrosystems.Peso_granja.repository.FarmManagerRepository;
 import com.blacmircrosystems.Peso_granja.repository.FarmRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.List;
 public class FarmService {
 
     private final FarmRepository farmRepository;
+    private final FarmManagerRepository managerRepository;
     private final FarmMapper farmMapper;
     public FarmResponse create(FarmRequest farm){
         if(farmRepository.existsByName(farm.getName())){
@@ -38,6 +41,19 @@ public class FarmService {
         Farm save = farmRepository.save(farm);
         return  farmMapper.toResponse(save);
 
+    }
+    public FarmResponse addFarmManager(Long idFarmManager,Long id){
+        FarmManager farmManager= managerRepository.findById(idFarmManager).orElseThrow(()-> new RuntimeException("Encargado no encontrado"));
+        Farm farm = finByEntityId(id);
+        farm.setManager(farmManager);
+        Farm farm1= farmRepository.save(farm);
+        return  farmMapper.toResponse(farm);
+    }
+    public FarmResponse quitFarmManager(Long id){
+        Farm farm=  finByEntityId(id);
+        farm.setManager(null);
+        Farm farm1 = farmRepository.save(farm);
+        return farmMapper.toResponse(farm1);
     }
     public Farm finByEntityId(Long id){
         return  farmRepository.findById(id).orElseThrow(()-> new RuntimeException("No existe granja"));
