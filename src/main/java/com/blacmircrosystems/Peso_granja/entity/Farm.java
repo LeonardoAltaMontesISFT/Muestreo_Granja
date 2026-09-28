@@ -19,7 +19,7 @@ public class Farm {
     private String ubicacion;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "farm_manager_id")
-    private FarmManager manager;
+    private FarmManager farmManager;
 
 
 }

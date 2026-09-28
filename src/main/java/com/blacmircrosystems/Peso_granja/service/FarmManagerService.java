@@ -80,4 +80,8 @@ public class FarmManagerService {
         FarmManager manager= repository.findById(id).orElseThrow(()-> new RuntimeException("Trabajador no encontrado"));
         return manager;
     }
+    public FarmManagerResponse getMe(String name){
+            FarmManager farmManager = repository.findByUserAccountUsername(name);
+            return mapper.toResponse(farmManager);
+    }
 }

@@ -7,6 +7,7 @@ import com.blacmircrosystems.Peso_granja.service.FarmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class FarmController {
             @PathVariable Long farmId,
             @PathVariable Long managerId
     ) {
-        return ResponseEntity.ok(farmService.addFarmManager(farmId, managerId));
+        return ResponseEntity.ok(farmService.addFarmManager(managerId,farmId));
     }
     @PutMapping("/quit/{farmId}")
     public ResponseEntity<FarmResponse> quitFarmManager(
@@ -55,5 +56,13 @@ public class FarmController {
     public ResponseEntity<FarmResponse> delete(@PathVariable Long idFarm){
         farmService.delete(idFarm);
        return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/encargado/{id}")
+    public ResponseEntity<List<FarmResponse>> getByFarmManager(@PathVariable Long id){
+        return ResponseEntity.ok(farmService.getByFarmManager(id));
+    }
+    @GetMapping("/misgranjas")
+    public ResponseEntity<List<FarmResponse>> getMyFarms(Authentication authentication){
+        return ResponseEntity.ok(farmService.getMyFarms(authentication.getName()));
     }
 }

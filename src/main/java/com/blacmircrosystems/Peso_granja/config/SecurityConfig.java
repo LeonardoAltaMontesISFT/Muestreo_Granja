@@ -62,17 +62,23 @@ public class SecurityConfig {
                 )
 
                 .authorizeHttpRequests(auth -> auth
-                        // Inicio de sesión público
+
+                        // =========================
+                        // PÚBLICO
+                        // =========================
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/auth/login"
                         ).permitAll()
 
-                        // Rutas administrativas
+
+                        // =========================
+                        // ADMIN
+                        // =========================
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
 
-                        // Crear granjas y casetas
+                        // Crear recursos administrativos
                         .requestMatchers(
                                 HttpMethod.POST,
                                 "/api/granja",
@@ -81,32 +87,81 @@ public class SecurityConfig {
                                 "/api/veterinario"
                         ).hasRole("ADMIN")
 
-
-                        // Modificar granjas y casetas
+                        // Modificar recursos administrativos
                         .requestMatchers(
                                 HttpMethod.PUT,
                                 "/api/granja/**",
                                 "/api/casetas/**"
-
                         ).hasRole("ADMIN")
 
-                        // Eliminar granjas y casetas
+                        // Eliminar recursos administrativos
                         .requestMatchers(
                                 HttpMethod.DELETE,
                                 "/api/granja/**",
                                 "/api/casetas/**",
                                 "/api/encargado/**",
                                 "/api/veterinario/**"
-
                         ).hasRole("ADMIN")
+
+
+                        // =========================
+                        // FARM MANAGER
+                        // =========================
+
+                        // Consultar SU información
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/encargado/me"
+                        ).hasRole("FARM_MANAGER")
+
+                        // Consultar SUS granjas
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/granja/misgranjas/**"
+                        ).hasRole("FARM_MANAGER")
+
+                        // Consultar casetas
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/casetas/**"
+                        ).hasRole("FARM_MANAGER")
+
+                        // Parvadas
+                        .requestMatchers(
+                                "/api/parvada/**"
+                        ).hasRole("FARM_MANAGER")
+
+                        // Relación parvada-caseta
+                        .requestMatchers(
+                                "/api/parvadacaseta/**"
+                        ).hasRole("FARM_MANAGER")
+
+                        // Mortalidad
+                        .requestMatchers(
+                                "/api/mortalidad/**"
+                        ).hasRole("FARM_MANAGER")
+
+                        // Muestreos
+                        .requestMatchers(
+                                "/api/muestreos/**",
+                                "/api/muestreo/**"
+                        ).hasRole("FARM_MANAGER")
+
+
+                        // =========================
+                        // CONSULTAS ADMIN
+                        // IMPORTANTE: después de /me
+                        // =========================
                         .requestMatchers(
                                 HttpMethod.GET,
                                 "/api/encargado/**",
                                 "/api/veterinario/**"
-
                         ).hasRole("ADMIN")
-                        // Resto de las rutas
+
+
+                        // Cualquier otra ruta requiere autenticación
                         .anyRequest().authenticated()
+
                 )
 
                 .oauth2ResourceServer(oauth2 -> oauth2

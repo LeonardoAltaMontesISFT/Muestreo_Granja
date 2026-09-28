@@ -6,11 +6,13 @@ import com.blacmircrosystems.Peso_granja.entity.Farm;
 import com.blacmircrosystems.Peso_granja.entity.Flock;
 import com.blacmircrosystems.Peso_granja.entity.FlockHouse;
 import com.blacmircrosystems.Peso_granja.entity.PoultryHouse;
+import com.blacmircrosystems.Peso_granja.enums.FlockHouseStatus;
 import com.blacmircrosystems.Peso_granja.mapper.FlockHouseMapper;
 import com.blacmircrosystems.Peso_granja.repository.FarmRepository;
 import com.blacmircrosystems.Peso_granja.repository.FlockHouseRepository;
 import com.blacmircrosystems.Peso_granja.repository.FlockRepository;
 import com.blacmircrosystems.Peso_granja.repository.PoultryHouseRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,7 @@ public class FlockHouseService {
     private final  FlockRepository flockRepository;
     private final PoultryHouseRepository poultryHouseRepository;
     //Create
+    @Transactional
     public FlockHouseResponse create(FlockHouseRequest request){
         //Excepciones para verificar si no existe ya registrada una poultryhouse repetida en una parvada
         if(repository.existsByFlockIdAndPoultryHouseId(request.getFlockId(),request.getPoultryHouseId())){
@@ -39,7 +42,11 @@ public class FlockHouseService {
         FlockHouse saved= repository.save(flockHouse);
         return mapper.toResponse(saved);
     }
-
+    public FlockHouseResponse closedFlock(Long id){
+        FlockHouse flockHouse = repository.findById(id).orElseThrow(()-> new RuntimeException("Parvada en caseta no exite"));
+        flockHouse.setStatus(FlockHouseStatus.CLOSED);
+        return mapper.toResponse(flockHouse);
+    }
     public FlockHouseResponse getById(Long id){
         return mapper.toResponse(repository.findById(id).orElseThrow(()-> new RuntimeException("Parvada en caseta no exite")));
     }

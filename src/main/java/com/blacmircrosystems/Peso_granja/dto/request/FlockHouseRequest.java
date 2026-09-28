@@ -17,6 +17,4 @@ public class FlockHouseRequest {
  private Long poultryHouseId;
 private Integer initialMaleBirdCount;
 private Integer initialFemaleBirdCount;
-private FlockHouseStatus status;
-
 }

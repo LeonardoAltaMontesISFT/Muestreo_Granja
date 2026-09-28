@@ -11,5 +11,6 @@ public class FarmResponse {
     private Long id;
     private String name;
     private String ubicacion;
-    private String nameFarmManger;
+    private Long idFarmManger;
+
 }

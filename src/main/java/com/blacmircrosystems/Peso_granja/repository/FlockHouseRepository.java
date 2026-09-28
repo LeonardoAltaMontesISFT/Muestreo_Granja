@@ -9,10 +9,6 @@ import java.util.List;
 @Repository
 public interface FlockHouseRepository extends JpaRepository<FlockHouse,Long> {
 boolean existsByFlockIdAndPoultryHouseId(Long flockId, Long poultryhouseId);
-    boolean existsByFlockIdAndPoultryHouseIdAndIdNot(
-            Long flockId,
-            Long poultryHouseId,
-            Long flockHouseId
-    );
+
     List<FlockHouse> findByFlockId(Long flocId);
 }

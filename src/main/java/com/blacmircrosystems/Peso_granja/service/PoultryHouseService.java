@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PoultryHouseService {
+public class    PoultryHouseService {
     private final PoultryHouseRepository poultryHouseRepository;
     private final PoultryHouseMapper poultryHouseMapper;
     private final FarmRepository farmRepository;

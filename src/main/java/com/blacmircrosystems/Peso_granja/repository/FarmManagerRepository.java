@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FarmManagerRepository extends JpaRepository<FarmManager,Long> {
+    FarmManager findByUserAccountUsername(String name);
 }

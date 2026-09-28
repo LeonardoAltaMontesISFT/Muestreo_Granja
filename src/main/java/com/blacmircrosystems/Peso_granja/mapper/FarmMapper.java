@@ -14,6 +14,16 @@ public class FarmMapper {
         return farm;
     }
     public FarmResponse toResponse(Farm farm){
-        return new FarmResponse(farm.getId(), farm.getName(), farm.getUbicacion(),farm.getManager().getName());
-    }
+        Long idManager= null;
+
+        if (farm.getFarmManager() != null) {
+            idManager= farm.getFarmManager().getId();
+        }
+
+        return new FarmResponse(
+                farm.getId(),
+                farm.getName(),
+                farm.getUbicacion(),
+                idManager
+        );    }
 }

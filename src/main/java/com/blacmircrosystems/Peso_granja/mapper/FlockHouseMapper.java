@@ -4,6 +4,7 @@ import com.blacmircrosystems.Peso_granja.dto.request.FlockHouseRequest;
 import com.blacmircrosystems.Peso_granja.dto.response.FlockHouseMortalityResponse;
 import com.blacmircrosystems.Peso_granja.dto.response.FlockHouseResponse;
 import com.blacmircrosystems.Peso_granja.entity.FlockHouse;
+import com.blacmircrosystems.Peso_granja.enums.FlockHouseStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -12,9 +13,8 @@ public class FlockHouseMapper {
         FlockHouse flockHouse = new FlockHouse();
         flockHouse.setInitialFemaleBirdCount(request.getInitialFemaleBirdCount());
         flockHouse.setInitialMaleBirdCount(request.getInitialMaleBirdCount());
-        flockHouse.setStatus(request.getStatus());
+        flockHouse.setStatus(FlockHouseStatus.ACTIVED);
         flockHouse.setLiveBirdCount(request.getInitialFemaleBirdCount()+ request.getInitialMaleBirdCount());
-
         flockHouse.setCurrentFemaleCount(request.getInitialFemaleBirdCount());
         flockHouse.setCurrentMaleCount(request.getInitialMaleBirdCount());
         return flockHouse;
